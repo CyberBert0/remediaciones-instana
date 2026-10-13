@@ -1,0 +1,13 @@
+---
+- name: Remediacion automatica Instana
+  hosts: all
+  become: true
+  tasks:
+    - name: Mostrar datos recibidos de Instana
+      ansible.builtin.debug:
+        msg: "Alerta {{ severidad | default('n/a') }} en {{ target_host | default('n/a') }}"
+
+    - name: Reiniciar servicio (ajusta el nombre)
+      ansible.builtin.service:
+        name: "{{ servicio | default('nginx') }}"
+        state: restarted
