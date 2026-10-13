@@ -1,13 +1,13 @@
 ---
-- name: Remediacion automatica Instana
+- name: Remediacion automatica Instana (Windows)
   hosts: all
-  become: true
+  gather_facts: false
   tasks:
     - name: Mostrar datos recibidos de Instana
       ansible.builtin.debug:
         msg: "Alerta {{ severidad | default('n/a') }} en {{ target_host | default('n/a') }}"
 
-    - name: Reiniciar servicio (ajusta el nombre)
-      ansible.builtin.service:
-        name: "{{ servicio | default('nginx') }}"
+    - name: Reiniciar servicio
+      ansible.windows.win_service:
+        name: "{{ servicio | default('Spooler') }}"
         state: restarted
